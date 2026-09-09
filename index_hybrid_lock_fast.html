@@ -1,0 +1,2813 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#087f72">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <title>ศูนย์รวมระบบงาน โรงพยาบาลกำแพงแสน</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+    crossorigin="anonymous"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.16.3/dist/cdn.min.js"></script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+
+    :root {
+      --kps-primary: #087f72;
+      --kps-primary-2: #11a997;
+      --kps-primary-soft: #eaf8f5;
+      --kps-ink: #18302d;
+      --kps-muted: #6c7e7b;
+      --kps-bg: #f5faf9;
+      --kps-card: #ffffff;
+      --kps-border: rgba(25, 83, 76, 0.11);
+      --kps-shadow: 0 12px 34px rgba(29, 72, 66, 0.075);
+      --kps-shadow-hover: 0 20px 50px rgba(29, 72, 66, 0.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Kanit', sans-serif;
+      color: var(--kps-ink);
+      background:
+        radial-gradient(circle at 4% 0%, rgba(17, 169, 151, .08), transparent 28%),
+        var(--kps-bg);
+    }
+
+    body.dark-mode {
+      --kps-ink: #e7f2f0;
+      --kps-muted: #9bb0ac;
+      --kps-bg: #091513;
+      --kps-card: #11211f;
+      --kps-border: rgba(190, 232, 224, 0.10);
+      --kps-shadow: 0 12px 34px rgba(0, 0, 0, .20);
+      --kps-shadow-hover: 0 20px 50px rgba(0, 0, 0, .30);
+      background:
+        radial-gradient(circle at 4% 0%, rgba(17, 169, 151, .10), transparent 28%),
+        var(--kps-bg);
+    }
+
+    button, input, select, textarea { font-family: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1040;
+      border-bottom: 1px solid var(--kps-border);
+      background: color-mix(in srgb, var(--kps-card) 88%, transparent);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 44px;
+      border-radius: 14px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--kps-primary), var(--kps-primary-2));
+      box-shadow: 0 9px 24px rgba(8, 127, 114, .20);
+    }
+
+    .brand-title {
+      color: var(--kps-ink);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.05;
+    }
+
+    .brand-subtitle {
+      margin-top: 4px;
+      color: var(--kps-muted);
+      font-size: .76rem;
+      line-height: 1;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--kps-border);
+      border-radius: 13px;
+      color: var(--kps-ink);
+      background: var(--kps-card);
+      transition: .18s ease;
+    }
+
+    .icon-btn:hover {
+      color: var(--kps-primary);
+      border-color: rgba(8,127,114,.26);
+      transform: translateY(-1px);
+    }
+
+    .btn-kps {
+      --bs-btn-color: #fff;
+      --bs-btn-bg: var(--kps-primary);
+      --bs-btn-border-color: var(--kps-primary);
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #066d63;
+      --bs-btn-hover-border-color: #066d63;
+      --bs-btn-active-bg: #055c54;
+      --bs-btn-active-border-color: #055c54;
+      border-radius: 13px;
+      font-weight: 600;
+    }
+
+    .btn-soft {
+      border: 1px solid rgba(8,127,114,.14);
+      border-radius: 13px;
+      color: var(--kps-primary);
+      background: var(--kps-primary-soft);
+      font-weight: 600;
+    }
+
+    body.dark-mode .btn-soft {
+      background: rgba(17,169,151,.10);
+      border-color: rgba(90,215,198,.15);
+    }
+
+    /* Search only - ไม่มี Hero */
+    .search-section {
+      padding-top: 28px;
+    }
+
+    .search-box {
+      position: relative;
+      width: min(100%, 760px);
+      margin: 0 auto;
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+      z-index: 2;
+      transform: translateY(-50%);
+      color: var(--kps-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      min-height: 58px;
+      padding-left: 52px;
+      padding-right: 52px;
+      border: 1px solid var(--kps-border);
+      border-radius: 18px;
+      color: var(--kps-ink);
+      background: var(--kps-card);
+      box-shadow: var(--kps-shadow);
+      font-size: .96rem;
+    }
+
+    .search-input:focus {
+      color: var(--kps-ink);
+      border-color: rgba(8,127,114,.32);
+      background: var(--kps-card);
+      box-shadow:
+        var(--kps-shadow),
+        0 0 0 4px rgba(8,127,114,.07);
+    }
+
+    .search-clear {
+      position: absolute;
+      top: 50%;
+      right: 11px;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      transform: translateY(-50%);
+      border: 0;
+      border-radius: 12px;
+      color: var(--kps-muted);
+      background: transparent;
+    }
+
+    .search-clear:hover {
+      color: var(--kps-primary);
+      background: var(--kps-primary-soft);
+    }
+
+    .admin-strip {
+      margin-top: 18px;
+      padding: 13px 15px;
+      border: 1px solid rgba(226, 167, 24, .22);
+      border-radius: 17px;
+      background: #fff8df;
+    }
+
+    body.dark-mode .admin-strip {
+      background: rgba(129, 94, 8, .16);
+    }
+
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: #795700;
+      background: #ffecad;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    body.dark-mode .admin-badge {
+      color: #ffe19a;
+      background: rgba(255,222,125,.13);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 30px 0 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--kps-ink);
+      font-size: 1.18rem;
+      font-weight: 700;
+    }
+
+    .section-subtitle {
+      margin: 4px 0 0;
+      color: var(--kps-muted);
+      font-size: .84rem;
+    }
+
+    .category-scroll {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding: 2px 2px 9px;
+      scrollbar-width: thin;
+    }
+
+    .category-chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 42px;
+      padding: 8px 13px;
+      border: 1px solid var(--kps-border);
+      border-radius: 13px;
+      color: var(--kps-muted);
+      background: var(--kps-card);
+      font-size: .88rem;
+      font-weight: 500;
+      transition: .18s ease;
+    }
+
+    .category-chip:hover {
+      color: var(--kps-primary);
+      border-color: rgba(8,127,114,.25);
+      transform: translateY(-1px);
+    }
+
+    .category-chip.active {
+      color: #fff;
+      border-color: var(--kps-primary);
+      background: var(--kps-primary);
+      box-shadow: 0 9px 22px rgba(8,127,114,.16);
+    }
+
+    .chip-count {
+      min-width: 24px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      text-align: center;
+      background: rgba(110,130,125,.10);
+      font-size: .70rem;
+      font-weight: 600;
+    }
+
+    .category-chip.active .chip-count {
+      background: rgba(255,255,255,.18);
+    }
+
+    .lock-indicator {
+      font-size: .78rem;
+    }
+
+    .app-grid { margin-bottom: 34px; }
+
+    .app-card {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid var(--kps-border);
+      border-radius: 20px;
+      background: var(--kps-card);
+      box-shadow: 0 8px 24px rgba(31,75,69,.05);
+      transition: .20s ease;
+    }
+
+    .app-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(8,127,114,.19);
+      box-shadow: var(--kps-shadow-hover);
+    }
+
+    .app-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      opacity: 0;
+      background: linear-gradient(90deg, var(--kps-primary), #46cdbb);
+      transition: .18s ease;
+    }
+
+    .app-card:hover::before { opacity: 1; }
+
+    .app-body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .app-icon {
+      width: 56px;
+      height: 56px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 56px;
+      overflow: hidden;
+      border: 1px solid rgba(8,127,114,.08);
+      border-radius: 17px;
+      color: var(--kps-primary);
+      background: var(--kps-primary-soft);
+      font-size: 1.45rem;
+    }
+
+    body.dark-mode .app-icon {
+      background: rgba(17,169,151,.10);
+    }
+
+    .app-icon img {
+      max-width: 34px;
+      max-height: 34px;
+      object-fit: contain;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      max-width: 170px;
+      padding: 5px 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      color: var(--kps-primary);
+      background: var(--kps-primary-soft);
+      font-size: .69rem;
+      font-weight: 600;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    body.dark-mode .tag {
+      background: rgba(17,169,151,.10);
+    }
+
+    .tag-lock {
+      color: #965d00;
+      background: #fff0c9;
+    }
+
+    body.dark-mode .tag-lock {
+      color: #ffd986;
+      background: rgba(234,170,31,.12);
+    }
+
+    .app-title {
+      margin: 15px 0 6px;
+      color: var(--kps-ink);
+      font-size: 1.04rem;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .app-description {
+      display: -webkit-box;
+      min-height: 42px;
+      margin: 0;
+      overflow: hidden;
+      color: var(--kps-muted);
+      font-size: .82rem;
+      font-weight: 300;
+      line-height: 1.55;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .app-footer {
+      margin-top: auto;
+      padding-top: 17px;
+    }
+
+    .launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--kps-primary);
+      font-size: .85rem;
+      font-weight: 600;
+    }
+
+    .admin-tools {
+      display: flex;
+      gap: 6px;
+    }
+
+    .admin-tools .btn {
+      width: 35px;
+      height: 35px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: 11px;
+    }
+
+    .empty-state {
+      padding: 50px 18px;
+      border: 1px dashed rgba(8,127,114,.20);
+      border-radius: 20px;
+      text-align: center;
+      background: var(--kps-card);
+    }
+
+    .empty-icon {
+      width: 68px;
+      height: 68px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 21px;
+      color: var(--kps-primary);
+      background: var(--kps-primary-soft);
+      font-size: 1.8rem;
+    }
+
+    body.dark-mode .empty-icon {
+      background: rgba(17,169,151,.10);
+    }
+
+    .top-progress {
+      position: fixed;
+      top: 61px;
+      left: 0;
+      right: 0;
+      z-index: 1100;
+      height: 3px;
+      overflow: hidden;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    .top-progress span {
+      display: block;
+      width: 38%;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--kps-primary);
+      animation: kpsProgress 0.9s ease-in-out infinite;
+    }
+
+    @keyframes kpsProgress {
+      0%   { transform: translateX(-110%); }
+      100% { transform: translateX(320%); }
+    }
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(245,250,249,.64);
+      backdrop-filter: blur(7px);
+    }
+
+    body.dark-mode .loading-overlay {
+      background: rgba(4,13,12,.65);
+    }
+
+    .loading-box {
+      min-width: 190px;
+      padding: 23px;
+      border: 1px solid var(--kps-border);
+      border-radius: 20px;
+      text-align: center;
+      background: var(--kps-card);
+      box-shadow: var(--kps-shadow);
+    }
+
+    .spinner-border { color: var(--kps-primary); }
+
+    .modal-content {
+      color: var(--kps-ink);
+      border: 1px solid var(--kps-border) !important;
+      border-radius: 22px !important;
+      background: var(--kps-card);
+      box-shadow: 0 25px 80px rgba(15,48,43,.22) !important;
+    }
+
+    .modal-header {
+      padding: 20px 21px 10px;
+      border-bottom: 0;
+    }
+
+    .modal-body {
+      padding: 12px 21px 19px;
+    }
+
+    .modal-footer {
+      padding: 0 21px 21px;
+      border-top: 0;
+    }
+
+    .form-label {
+      margin-bottom: 7px;
+      color: var(--kps-ink);
+      font-size: .84rem;
+      font-weight: 600;
+    }
+
+    .form-control,
+    .form-select {
+      min-height: 46px;
+      color: var(--kps-ink);
+      border: 1px solid var(--kps-border);
+      border-radius: 13px;
+      background: var(--kps-card);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      color: var(--kps-ink);
+      border-color: rgba(8,127,114,.35);
+      background: var(--kps-card);
+      box-shadow: 0 0 0 4px rgba(8,127,114,.07);
+    }
+
+    .form-check-input:checked {
+      border-color: var(--kps-primary);
+      background-color: var(--kps-primary);
+    }
+
+    .icon-picker-box {
+      max-height: 190px;
+      overflow-y: auto;
+      padding: 11px;
+      border: 1px solid var(--kps-border);
+      border-radius: 15px;
+      background: rgba(120,145,140,.04);
+    }
+
+    .icon-option {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--kps-border);
+      border-radius: 11px;
+      color: var(--kps-muted);
+      background: var(--kps-card);
+      cursor: pointer;
+    }
+
+    .icon-option.selected {
+      color: #fff;
+      border-color: var(--kps-primary);
+      background: var(--kps-primary);
+    }
+
+    .category-manager-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--kps-border);
+    }
+
+    .category-manager-row:last-child {
+      border-bottom: 0;
+    }
+
+    .access-lock-icon {
+      width: 64px;
+      height: 64px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      border-radius: 20px;
+      color: var(--kps-primary);
+      background: var(--kps-primary-soft);
+      font-size: 1.7rem;
+    }
+
+    body.dark-mode .access-lock-icon {
+      background: rgba(17,169,151,.10);
+    }
+
+    .footer {
+      padding: 24px 0 30px;
+      color: var(--kps-muted);
+      font-size: .76rem;
+      text-align: center;
+    }
+
+    @media (max-width: 575.98px) {
+      .container { --bs-gutter-x: 1.2rem; }
+      .brand-subtitle { display: none; }
+      .search-section { padding-top: 18px; }
+      .search-input {
+        min-height: 54px;
+        border-radius: 16px;
+      }
+      .section-head { margin-top: 24px; }
+      .app-body { padding: 18px; }
+      .admin-strip .btn .btn-text { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+
+<body
+  x-data="dashboardApp()"
+  x-init="init()"
+  :class="{ 'dark-mode': darkMode }"
+>
+
+  <!-- Loading -->
+  <div x-cloak x-show="loading && categories.length === 0" x-transition.opacity class="loading-overlay">
+    <div class="loading-box">
+      <div class="spinner-border" role="status"></div>
+      <div class="mt-3 fw-semibold" x-text="loadingText"></div>
+      <div class="small mt-1" style="color:var(--kps-muted);">โปรดรอสักครู่...</div>
+    </div>
+  </div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container py-2">
+      <div class="d-flex align-items-center justify-content-between gap-3">
+
+        <a
+          href="#"
+          class="d-flex align-items-center gap-3 text-decoration-none"
+          @click.prevent="resetView()"
+        >
+          <span class="brand-mark">
+            <i class="bi bi-hospital"></i>
+          </span>
+
+          <span>
+            <div class="brand-title">KPS App Portal</div>
+            <div class="brand-subtitle">โรงพยาบาลกำแพงแสน</div>
+          </span>
+        </a>
+
+        <div class="d-flex align-items-center gap-2">
+          <button
+            type="button"
+            class="icon-btn"
+            @click="toggleTheme()"
+            :title="darkMode ? 'โหมดสว่าง' : 'โหมดมืด'"
+          >
+            <i :class="darkMode ? 'bi bi-sun' : 'bi bi-moon-stars'"></i>
+          </button>
+
+          <button
+            x-cloak
+            x-show="!isAdmin"
+            type="button"
+            class="btn btn-kps px-3"
+            data-bs-toggle="modal"
+            data-bs-target="#loginModal"
+          >
+            <i class="bi bi-shield-lock me-1"></i>
+            <span class="d-none d-sm-inline">จัดการระบบ</span>
+          </button>
+
+          <button
+            x-cloak
+            x-show="isAdmin"
+            type="button"
+            class="btn btn-outline-danger rounded-3 px-3"
+            @click="logoutAdmin()"
+          >
+            <i class="bi bi-box-arrow-right me-1"></i>
+            <span class="d-none d-sm-inline">ออกจากระบบ</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- โหลดเบื้องหลังแบบไม่บังหน้าจอ -->
+  <div
+    x-cloak
+    x-show="loading && categories.length > 0"
+    class="top-progress"
+  >
+    <span></span>
+  </div>
+
+  <main class="container">
+
+    <!-- เหลือเฉพาะ Search -->
+    <section class="search-section">
+      <div class="search-box">
+        <i class="bi bi-search search-icon"></i>
+
+        <input
+          type="search"
+          class="form-control search-input"
+          x-model.debounce.250ms="searchQuery"
+          @input="currentCategory = 'all'"
+          placeholder="ค้นหาระบบงาน..."
+          autocomplete="off"
+          aria-label="ค้นหาระบบงาน"
+        >
+
+        <button
+          x-cloak
+          x-show="searchQuery"
+          type="button"
+          class="search-clear"
+          @click="searchQuery = ''"
+          title="ล้างคำค้นหา"
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Admin -->
+    <section x-cloak x-show="isAdmin" class="admin-strip">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <div>
+          <span class="admin-badge">
+            <i class="bi bi-shield-check"></i>
+            โหมดผู้ดูแลระบบ
+          </span>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+          <button
+            type="button"
+            class="btn btn-sm btn-soft px-3"
+            @click="openCategoryManager()"
+          >
+            <i class="bi bi-folder-gear me-1"></i>
+            <span class="btn-text">จัดการหมวดหมู่</span>
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-kps px-3"
+            @click="openAppModal()"
+          >
+            <i class="bi bi-plus-lg me-1"></i>
+            <span class="btn-text">เพิ่มระบบ</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section>
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">ระบบงาน</h2>
+          <p class="section-subtitle">
+            <span x-show="!searchQuery">เลือกหมวดหมู่ที่ต้องการ</span>
+            <span x-cloak x-show="searchQuery">
+              ผลการค้นหา “<span x-text="searchQuery"></span>”
+            </span>
+          </p>
+        </div>
+
+        <span
+          class="small text-nowrap"
+          style="color:var(--kps-muted);"
+          x-text="filteredApps.length + ' รายการ'"
+        ></span>
+      </div>
+
+      <div class="category-scroll">
+
+        <button
+          type="button"
+          class="category-chip"
+          :class="{ 'active': currentCategory === 'all' }"
+          @click="selectCategory('all')"
+        >
+          <i class="bi bi-grid"></i>
+          ทั้งหมด
+          <span class="chip-count" x-text="apps.length"></span>
+        </button>
+
+        <template x-for="cat in categories" :key="cat.id">
+          <button
+            type="button"
+            class="category-chip"
+            :class="{ 'active': String(currentCategory) === String(cat.id) }"
+            @click="selectCategory(cat.id)"
+          >
+            <i
+              class="lock-indicator"
+              :class="categoryLockIcon(cat)"
+            ></i>
+
+            <span x-text="cat.name"></span>
+
+            <span
+              class="chip-count"
+              x-text="categoryCount(cat)"
+            ></span>
+          </button>
+        </template>
+
+      </div>
+    </section>
+
+    <!-- Apps -->
+    <section class="row g-3 g-md-4 app-grid pt-2">
+
+      <template x-for="app in filteredApps" :key="app.id">
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+          <article
+            class="app-card"
+            @click="handleAppClick(app)"
+          >
+            <div class="app-body">
+
+              <div class="d-flex align-items-start justify-content-between gap-2">
+                <div class="app-icon">
+                  <template x-if="isImageIcon(app.icon)">
+                    <img
+                      :src="app.icon"
+                      alt=""
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    >
+                  </template>
+
+                  <template x-if="!isImageIcon(app.icon)">
+                    <i :class="'bi ' + (app.icon || 'bi-grid')"></i>
+                  </template>
+                </div>
+
+                <div class="d-flex flex-column align-items-end gap-1">
+                  <span
+                    class="tag"
+                    x-text="categoryName(app.category_id)"
+                  ></span>
+
+                  <span
+                    x-cloak
+                    x-show="app.is_locked"
+                    class="tag tag-lock"
+                  >
+                    <i class="bi bi-lock-fill"></i>
+                    ใช้รหัส
+                  </span>
+                </div>
+              </div>
+
+              <h3 class="app-title" x-text="app.app_name"></h3>
+
+              <p
+                class="app-description"
+                x-text="app.description || 'เปิดใช้งานระบบ'"
+              ></p>
+
+              <div class="app-footer">
+
+                <div
+                  x-cloak
+                  x-show="!isAdmin"
+                  class="launch"
+                >
+                  <i :class="app.is_locked ? 'bi bi-lock-fill' : 'bi bi-box-arrow-up-right'"></i>
+                  <span x-text="app.is_locked ? 'ใส่รหัสเพื่อเข้าใช้งาน' : 'เข้าใช้งาน'"></span>
+                </div>
+
+                <div
+                  x-cloak
+                  x-show="isAdmin"
+                  class="d-flex align-items-center justify-content-between gap-2"
+                >
+                  <span class="small" style="color:var(--kps-muted);">
+                    <i
+                      :class="app.is_locked ? 'bi bi-lock-fill' : 'bi bi-unlock'"
+                      class="me-1"
+                    ></i>
+                    <span x-text="app.is_locked ? 'ล็อก' : 'เปิด'"></span>
+                  </span>
+
+                  <div class="admin-tools">
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      title="แก้ไข"
+                      @click.stop="openAppModal(app)"
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      title="ลบ"
+                      @click.stop="deleteAppItem(app)"
+                    >
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </article>
+        </div>
+      </template>
+
+      <div
+        x-cloak
+        x-show="filteredApps.length === 0 && !loading"
+        class="col-12"
+      >
+        <div class="empty-state">
+          <div class="empty-icon">
+            <i
+              :class="activeCategoryIsLockedAndClosed() ? 'bi bi-lock-fill' : 'bi bi-search'"
+            ></i>
+          </div>
+
+          <h4
+            class="mt-3 mb-1 fw-bold"
+            x-text="activeCategoryIsLockedAndClosed() ? 'หมวดหมู่นี้ถูกล็อก' : 'ไม่พบระบบงาน'"
+          ></h4>
+
+          <p class="mb-3" style="color:var(--kps-muted);">
+            <span x-show="activeCategoryIsLockedAndClosed()">
+              กรุณาปลดล็อกหมวดหมู่ก่อนดูระบบภายใน
+            </span>
+
+            <span x-show="!activeCategoryIsLockedAndClosed()">
+              ลองเปลี่ยนคำค้นหา หรือเลือกหมวดหมู่อื่น
+            </span>
+          </p>
+
+          <button
+            x-cloak
+            x-show="activeCategoryIsLockedAndClosed()"
+            type="button"
+            class="btn btn-kps px-4"
+            @click="requestCurrentCategoryUnlock()"
+          >
+            <i class="bi bi-unlock me-1"></i>
+            ปลดล็อกหมวดหมู่
+          </button>
+
+          <button
+            x-cloak
+            x-show="!activeCategoryIsLockedAndClosed()"
+            type="button"
+            class="btn btn-soft px-4"
+            @click="resetView()"
+          >
+            แสดงระบบทั้งหมด
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      โรงพยาบาลกำแพงแสน • KPS App Portal
+    </div>
+  </footer>
+
+
+  <!-- ====================================================== -->
+  <!-- Modal: Category Unlock -->
+  <!-- ====================================================== -->
+  <div class="modal fade" id="categoryUnlockModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center pt-4">
+          <div class="access-lock-icon">
+            <i class="bi bi-folder-lock"></i>
+          </div>
+
+          <h5 class="fw-bold mb-1">หมวดหมู่นี้จำกัดการเข้าถึง</h5>
+
+          <p
+            class="small mb-3"
+            style="color:var(--kps-muted);"
+            x-text="pendingCategory ? pendingCategory.name : ''"
+          ></p>
+
+          <div class="input-group">
+            <input
+              :type="showAccessPassword ? 'text' : 'password'"
+              class="form-control text-center"
+              x-model="categoryPassword"
+              @keyup.enter="submitCategoryUnlock()"
+              placeholder="กรอกรหัสผ่าน"
+              autocomplete="off"
+            >
+
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              @click="showAccessPassword = !showAccessPassword"
+            >
+              <i :class="showAccessPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-light rounded-3"
+            data-bs-dismiss="modal"
+          >
+            ยกเลิก
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-kps px-4"
+            @click="submitCategoryUnlock()"
+            :disabled="!categoryPassword || actionBusy"
+          >
+            <i class="bi bi-unlock me-1"></i>
+            ปลดล็อก
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- Modal: App Unlock -->
+  <!-- ====================================================== -->
+  <div class="modal fade" id="appUnlockModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-body text-center pt-4">
+          <div class="access-lock-icon">
+            <i class="bi bi-lock"></i>
+          </div>
+
+          <h5 class="fw-bold mb-1">ระบบนี้ต้องใช้รหัสผ่าน</h5>
+
+          <p
+            class="small mb-3"
+            style="color:var(--kps-muted);"
+            x-text="pendingApp ? pendingApp.app_name : ''"
+          ></p>
+
+          <div class="input-group">
+            <input
+              :type="showAccessPassword ? 'text' : 'password'"
+              class="form-control text-center"
+              x-model="appPassword"
+              @keyup.enter="submitAppUnlock()"
+              placeholder="กรอกรหัสผ่าน"
+              autocomplete="off"
+            >
+
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              @click="showAccessPassword = !showAccessPassword"
+            >
+              <i :class="showAccessPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-light rounded-3"
+            data-bs-dismiss="modal"
+          >
+            ยกเลิก
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-kps px-4"
+            @click="submitAppUnlock()"
+            :disabled="!appPassword || actionBusy"
+          >
+            <i class="bi bi-box-arrow-up-right me-1"></i>
+            เข้าใช้งาน
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- Modal: Admin Login -->
+  <!-- ====================================================== -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <div class="small mb-1" style="color:var(--kps-primary);font-weight:600;">
+              Administrator
+            </div>
+            <h5 class="modal-title fw-bold">เข้าสู่ระบบผู้ดูแล</h5>
+          </div>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <label class="form-label">รหัสผ่านผู้ดูแล</label>
+
+          <div class="input-group">
+            <input
+              :type="showAdminPassword ? 'text' : 'password'"
+              class="form-control"
+              x-model="loginPassword"
+              @keyup.enter="submitLogin()"
+              placeholder="••••••••"
+              autocomplete="current-password"
+            >
+
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              @click="showAdminPassword = !showAdminPassword"
+            >
+              <i :class="showAdminPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-kps w-100"
+            @click="submitLogin()"
+            :disabled="!loginPassword || actionBusy"
+          >
+            <i class="bi bi-shield-check me-1"></i>
+            เข้าสู่ระบบ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- Modal: Category Manager -->
+  <!-- ====================================================== -->
+  <div class="modal fade" id="categoryManagerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <div>
+            <div class="small mb-1" style="color:var(--kps-primary);font-weight:600;">
+              Administrator
+            </div>
+            <h5 class="modal-title fw-bold">จัดการหมวดหมู่</h5>
+          </div>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <button
+            type="button"
+            class="btn btn-kps w-100 mb-3"
+            @click="openCategoryEditModal()"
+          >
+            <i class="bi bi-folder-plus me-1"></i>
+            เพิ่มหมวดหมู่ใหม่
+          </button>
+
+          <template x-for="cat in categories" :key="cat.id">
+            <div class="category-manager-row">
+              <div class="min-w-0">
+                <div class="fw-semibold" x-text="cat.name"></div>
+
+                <div class="small mt-1" style="color:var(--kps-muted);">
+                  <i :class="cat.is_locked ? 'bi bi-lock-fill' : 'bi bi-unlock'"></i>
+                  <span x-text="cat.is_locked ? 'ใช้รหัสผ่าน' : 'เปิดใช้งานทั่วไป'"></span>
+                </div>
+              </div>
+
+              <div class="d-flex gap-1">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary rounded-3"
+                  @click="openCategoryEditModal(cat)"
+                >
+                  <i class="bi bi-pencil"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger rounded-3"
+                  @click="deleteCategoryItem(cat)"
+                >
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            </div>
+          </template>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- Modal: Add/Edit Category -->
+  <!-- ====================================================== -->
+  <div class="modal fade" id="categoryEditModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <div>
+            <div class="small mb-1" style="color:var(--kps-primary);font-weight:600;">
+              หมวดหมู่
+            </div>
+            <h5
+              class="modal-title fw-bold"
+              x-text="categoryForm.id ? 'แก้ไขหมวดหมู่' : 'เพิ่มหมวดหมู่'"
+            ></h5>
+          </div>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">ชื่อหมวดหมู่ *</label>
+            <input
+              type="text"
+              class="form-control"
+              x-model.trim="categoryForm.name"
+              maxlength="100"
+              placeholder="ชื่อหมวดหมู่"
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">ลำดับ</label>
+            <input
+              type="number"
+              class="form-control"
+              x-model="categoryForm.order_idx"
+              placeholder="99"
+            >
+          </div>
+
+          <div class="form-check form-switch mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              role="switch"
+              id="categoryLockSwitch"
+              x-model="categoryForm.is_locked"
+            >
+
+            <label class="form-check-label fw-semibold" for="categoryLockSwitch">
+              🔒 จำกัดการเข้าถึงหมวดหมู่นี้
+            </label>
+          </div>
+
+          <div x-cloak x-show="categoryForm.is_locked">
+            <label class="form-label">
+              รหัสผ่าน
+              <span
+                x-show="categoryForm.id && categoryForm.password_set"
+                class="fw-normal"
+                style="color:var(--kps-muted);"
+              >
+                — เว้นว่างหากไม่ต้องการเปลี่ยน
+              </span>
+            </label>
+
+            <input
+              type="password"
+              class="form-control"
+              x-model="categoryForm.password"
+              autocomplete="new-password"
+              placeholder="ตั้งรหัสสำหรับหมวดหมู่นี้"
+            >
+
+            <div class="form-text">
+              ผู้ใช้จะต้องกรอกรหัสก่อนเห็นระบบภายในหมวดนี้
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-light rounded-3"
+            data-bs-dismiss="modal"
+          >
+            ยกเลิก
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-kps px-4"
+            @click="saveCategoryData()"
+            :disabled="actionBusy"
+          >
+            <i class="bi bi-check2-circle me-1"></i>
+            บันทึก
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ====================================================== -->
+  <!-- Modal: Add/Edit App -->
+  <!-- ====================================================== -->
+  <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <div>
+            <div class="small mb-1" style="color:var(--kps-primary);font-weight:600;">
+              ระบบงาน
+            </div>
+            <h5
+              class="modal-title fw-bold"
+              x-text="appForm.id ? 'แก้ไขระบบงาน' : 'เพิ่มระบบงาน'"
+            ></h5>
+          </div>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row g-3">
+
+            <div class="col-md-5">
+              <label class="form-label">หมวดหมู่ *</label>
+
+              <select
+                class="form-select"
+                x-model="appForm.category_id"
+              >
+                <option value="">-- เลือกหมวดหมู่ --</option>
+
+                <template x-for="cat in categories" :key="cat.id">
+                  <option
+                    :value="cat.id"
+                    x-text="cat.name"
+                  ></option>
+                </template>
+              </select>
+            </div>
+
+            <div class="col-md-7">
+              <label class="form-label">ชื่อระบบงาน *</label>
+
+              <input
+                type="text"
+                class="form-control"
+                x-model.trim="appForm.app_name"
+                maxlength="150"
+                placeholder="ชื่อระบบงาน"
+              >
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">URL *</label>
+
+              <input
+                type="url"
+                class="form-control"
+                x-model.trim="appForm.url"
+                placeholder="https://..."
+              >
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">รายละเอียด</label>
+
+              <textarea
+                class="form-control"
+                rows="3"
+                maxlength="500"
+                x-model.trim="appForm.description"
+                placeholder="คำอธิบายสั้น ๆ"
+              ></textarea>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">ไอคอน</label>
+
+              <input
+                type="text"
+                class="form-control mb-2"
+                x-model.trim="appForm.icon"
+                placeholder="bi-heart-pulse หรือ URL รูปภาพ"
+              >
+
+              <div class="icon-picker-box">
+                <div class="d-flex flex-wrap gap-2">
+                  <template x-for="icon in presetIcons" :key="icon">
+                    <button
+                      type="button"
+                      class="icon-option"
+                      :class="{ 'selected': appForm.icon === icon }"
+                      @click="appForm.icon = icon"
+                      :title="icon"
+                    >
+                      <i :class="'bi ' + icon"></i>
+                    </button>
+                  </template>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 rounded-4" style="background:var(--kps-primary-soft);">
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="appLockSwitch"
+                    x-model="appForm.is_locked"
+                  >
+
+                  <label class="form-check-label fw-semibold" for="appLockSwitch">
+                    🔐 ต้องใช้รหัสผ่านก่อนเข้าใช้งานระบบนี้
+                  </label>
+                </div>
+
+                <div
+                  x-cloak
+                  x-show="appForm.is_locked"
+                  class="mt-3"
+                >
+                  <label class="form-label">
+                    รหัสผ่านของระบบ
+                    <span
+                      x-show="appForm.id && appForm.password_set"
+                      class="fw-normal"
+                      style="color:var(--kps-muted);"
+                    >
+                      — เว้นว่างหากไม่ต้องการเปลี่ยน
+                    </span>
+                  </label>
+
+                  <input
+                    type="password"
+                    class="form-control"
+                    x-model="appForm.password"
+                    autocomplete="new-password"
+                    placeholder="ตั้งรหัสเฉพาะระบบ"
+                  >
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-light rounded-3"
+            data-bs-dismiss="modal"
+          >
+            ยกเลิก
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-kps px-4"
+            @click="saveAppData()"
+            :disabled="actionBusy"
+          >
+            <i class="bi bi-check2-circle me-1"></i>
+            บันทึก
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Toast -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="sysToast"
+      class="toast align-items-center border-0 shadow-lg"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="d-flex">
+        <div class="toast-body fw-semibold" id="toastMsg"></div>
+
+        <button
+          type="button"
+          class="btn-close me-2 m-auto"
+          data-bs-dismiss="toast"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"
+  ></script>
+
+  <script>
+    function dashboardApp() {
+      return {
+        /* ---------------- State ---------------- */
+        isAdmin: false,
+        adminToken: sessionStorage.getItem('kps_admin_token') || null,
+
+        loading: true,
+        loadingText: 'กำลังโหลดข้อมูล',
+        actionBusy: false,
+        hasSnapshot: false,
+
+        darkMode: localStorage.getItem('kps_theme') === 'dark',
+
+        categories: [],
+        apps: [],
+        currentCategory: 'all',
+        searchQuery: '',
+
+        categoryAccessTokens: {},
+        appAccessTokens: {},
+
+        pendingCategory: null,
+        pendingApp: null,
+
+        categoryPassword: '',
+        appPassword: '',
+        showAccessPassword: false,
+
+        loginPassword: '',
+        showAdminPassword: false,
+
+        categoryForm: {
+          id: '',
+          name: '',
+          order_idx: 99,
+          is_locked: false,
+          password: '',
+          password_set: false
+        },
+
+        appForm: {
+          id: '',
+          category_id: '',
+          app_name: '',
+          url: '',
+          icon: 'bi-grid',
+          description: '',
+          is_locked: false,
+          password: '',
+          password_set: false
+        },
+
+        presetIcons: [
+          'bi-hospital',
+          'bi-h-square',
+          'bi-heart-pulse',
+          'bi-activity',
+          'bi-bandaid',
+          'bi-capsule',
+          'bi-prescription2',
+          'bi-clipboard2-pulse',
+          'bi-file-medical',
+          'bi-journal-medical',
+          'bi-shield-check',
+          'bi-person-vcard',
+          'bi-people',
+          'bi-calendar-check',
+          'bi-cash-coin',
+          'bi-currency-exchange',
+          'bi-wallet2',
+          'bi-bank',
+          'bi-credit-card',
+          'bi-calculator',
+          'bi-receipt',
+          'bi-graph-up-arrow',
+          'bi-pie-chart',
+          'bi-bar-chart-line',
+          'bi-file-earmark-spreadsheet',
+          'bi-file-earmark-pdf',
+          'bi-display',
+          'bi-laptop',
+          'bi-database',
+          'bi-cloud',
+          'bi-link-45deg',
+          'bi-clipboard-data',
+          'bi-speedometer2',
+          'bi-gear',
+          'bi-window-stack',
+          'bi-box-arrow-up-right'
+        ],
+
+
+        /* ---------------- Init ---------------- */
+
+        init() {
+          this.loadAccessTokens();
+          this.applyTheme();
+
+          // ผู้ใช้ทั่วไป: แสดงข้อมูลล่าสุดใน session ทันที แล้ว refresh เบื้องหลัง
+          if (!this.adminToken) {
+            this.loadPublicSnapshot();
+          }
+
+          // Server call เดียวสำหรับ initial load
+          this.bootstrapData();
+        },
+
+
+        /* ---------------- Computed ---------------- */
+
+        get filteredApps() {
+          let result = [...this.apps];
+
+          const q = String(this.searchQuery || '')
+            .trim()
+            .toLowerCase();
+
+          if (q) {
+            result = result.filter(app => {
+              const name = String(app.app_name || '').toLowerCase();
+              const desc = String(app.description || '').toLowerCase();
+              const cat = this.categoryName(app.category_id).toLowerCase();
+
+              return (
+                name.includes(q) ||
+                desc.includes(q) ||
+                cat.includes(q)
+              );
+            });
+
+          } else if (this.currentCategory !== 'all') {
+            result = result.filter(
+              app => String(app.category_id) === String(this.currentCategory)
+            );
+          }
+
+          return result.sort((a, b) =>
+            String(a.app_name || '')
+              .localeCompare(String(b.app_name || ''), 'th')
+          );
+        },
+
+
+        /* ---------------- Theme ---------------- */
+
+        applyTheme() {
+          document.documentElement.style.colorScheme =
+            this.darkMode ? 'dark' : 'light';
+        },
+
+        toggleTheme() {
+          this.darkMode = !this.darkMode;
+
+          localStorage.setItem(
+            'kps_theme',
+            this.darkMode ? 'dark' : 'light'
+          );
+
+          this.applyTheme();
+        },
+
+
+        /* ---------------- Helpers ---------------- */
+
+        modal(id) {
+          return bootstrap.Modal.getOrCreateInstance(
+            document.getElementById(id)
+          );
+        },
+
+        categoryName(categoryId) {
+          const cat = this.categories.find(
+            c => String(c.id) === String(categoryId)
+          );
+
+          return cat ? cat.name : 'ไม่ระบุหมวดหมู่';
+        },
+
+        categoryById(categoryId) {
+          return this.categories.find(
+            c => String(c.id) === String(categoryId)
+          ) || null;
+        },
+
+        categoryCount(cat) {
+          if (this.isAdmin || this.isCategoryUnlocked(cat.id)) {
+            return this.apps.filter(
+              app => String(app.category_id) === String(cat.id)
+            ).length;
+          }
+
+          return Number(cat.app_count || 0);
+        },
+
+        isImageIcon(icon) {
+          return /^https?:\/\//i.test(String(icon || ''));
+        },
+
+        isCategoryUnlocked(categoryId) {
+          return !!this.categoryAccessTokens[String(categoryId)];
+        },
+
+        categoryLockIcon(cat) {
+          if (!cat.is_locked) {
+            return 'bi bi-folder2';
+          }
+
+          if (this.isAdmin || this.isCategoryUnlocked(cat.id)) {
+            return 'bi bi-unlock-fill';
+          }
+
+          return 'bi bi-lock-fill';
+        },
+
+        activeCategoryIsLockedAndClosed() {
+          if (this.isAdmin || this.currentCategory === 'all') {
+            return false;
+          }
+
+          const cat = this.categoryById(this.currentCategory);
+
+          return !!(
+            cat &&
+            cat.is_locked &&
+            !this.isCategoryUnlocked(cat.id)
+          );
+        },
+
+        loadAccessTokens() {
+          try {
+            this.categoryAccessTokens = JSON.parse(
+              sessionStorage.getItem('kps_category_tokens') || '{}'
+            );
+
+            this.appAccessTokens = JSON.parse(
+              sessionStorage.getItem('kps_app_tokens') || '{}'
+            );
+          } catch (_) {
+            this.categoryAccessTokens = {};
+            this.appAccessTokens = {};
+          }
+        },
+
+        saveAccessTokens() {
+          sessionStorage.setItem(
+            'kps_category_tokens',
+            JSON.stringify(this.categoryAccessTokens)
+          );
+
+          sessionStorage.setItem(
+            'kps_app_tokens',
+            JSON.stringify(this.appAccessTokens)
+          );
+        },
+
+        clearAccessTokens() {
+          this.categoryAccessTokens = {};
+          this.appAccessTokens = {};
+
+          sessionStorage.removeItem('kps_category_tokens');
+          sessionStorage.removeItem('kps_app_tokens');
+        },
+
+        mergeApps(newApps) {
+          const map = new Map();
+
+          this.apps.forEach(app => {
+            map.set(String(app.id), app);
+          });
+
+          (newApps || []).forEach(app => {
+            map.set(String(app.id), app);
+          });
+
+          this.apps = Array.from(map.values());
+        },
+
+        removeAppsFromCategory(categoryId) {
+          this.apps = this.apps.filter(
+            app => String(app.category_id) !== String(categoryId)
+          );
+        },
+
+        resetView() {
+          this.searchQuery = '';
+          this.currentCategory = 'all';
+
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        },
+
+
+        loadPublicSnapshot() {
+          try {
+            const raw = sessionStorage.getItem('kps_public_snapshot');
+
+            if (!raw) return;
+
+            const snapshot = JSON.parse(raw);
+
+            if (
+              snapshot &&
+              Array.isArray(snapshot.categories) &&
+              Array.isArray(snapshot.apps)
+            ) {
+              this.categories = snapshot.categories;
+              this.apps = snapshot.apps;
+              this.hasSnapshot = true;
+              this.loading = false;
+            }
+          } catch (_) {
+            sessionStorage.removeItem('kps_public_snapshot');
+          }
+        },
+
+        savePublicSnapshot() {
+          if (this.isAdmin) return;
+
+          try {
+            sessionStorage.setItem(
+              'kps_public_snapshot',
+              JSON.stringify({
+                categories: this.categories,
+                apps: this.apps,
+                savedAt: Date.now()
+              })
+            );
+          } catch (_) {}
+        },
+
+
+        /* ---------------- Public / Admin Data ---------------- */
+
+        bootstrapData() {
+          // ถ้ามี snapshot แล้ว refresh แบบไม่บังหน้าจอ
+          this.loading = !this.hasSnapshot;
+          this.loadingText = this.adminToken
+            ? 'กำลังตรวจสอบสิทธิ์ผู้ดูแล'
+            : 'กำลังโหลดระบบงาน';
+
+          google.script.run
+            .withSuccessHandler(result => {
+              if (result && result.status === 'success') {
+                this.isAdmin = !!result.isAdmin;
+
+                if (!this.isAdmin && this.adminToken) {
+                  this.clearAdminSession();
+                }
+
+                this.categories = result.data.categories || [];
+                this.apps = result.data.apps || [];
+
+                if (!this.isAdmin) {
+                  this.currentCategory = 'all';
+                  this.savePublicSnapshot();
+                }
+              } else {
+                this.showToast(
+                  result?.message || 'โหลดข้อมูลไม่สำเร็จ',
+                  'danger'
+                );
+              }
+
+              this.loading = false;
+              this.hasSnapshot = false;
+            })
+            .withFailureHandler(error => {
+              this.loading = false;
+              this.hasSnapshot = false;
+
+              this.showToast(
+                error?.message || 'เชื่อมต่อระบบล้มเหลว',
+                'danger'
+              );
+            })
+            .bootstrapDashboard(this.adminToken);
+        },
+
+        fetchPublicData() {
+          this.loading = true;
+          this.loadingText = 'กำลังโหลดระบบงาน';
+
+          google.script.run
+            .withSuccessHandler(result => {
+              if (result && result.status === 'success') {
+                this.categories = result.data.categories || [];
+                this.apps = result.data.apps || [];
+
+                if (!this.isAdmin) {
+                  this.currentCategory = 'all';
+                  this.savePublicSnapshot();
+                }
+              } else {
+                this.showToast(
+                  result?.message || 'โหลดข้อมูลไม่สำเร็จ',
+                  'danger'
+                );
+              }
+
+              this.loading = false;
+            })
+            .withFailureHandler(error => {
+              this.loading = false;
+
+              this.showToast(
+                error?.message || 'เชื่อมต่อระบบล้มเหลว',
+                'danger'
+              );
+            })
+            .getDashboardData();
+        },
+
+        fetchAdminData() {
+          if (!this.adminToken) return;
+
+          this.loading = true;
+          this.loadingText = 'กำลังโหลดข้อมูลผู้ดูแล';
+
+          google.script.run
+            .withSuccessHandler(result => {
+              if (result && result.status === 'success') {
+                this.categories = result.data.categories || [];
+                this.apps = result.data.apps || [];
+              } else {
+                this.handleAdminError(result);
+              }
+
+              this.loading = false;
+            })
+            .withFailureHandler(error => {
+              this.loading = false;
+              this.handleAdminFailure(error);
+            })
+            .getAdminDashboardData(this.adminToken);
+        },
+
+
+        /* ---------------- Category Access ---------------- */
+
+        selectCategory(categoryId) {
+          this.searchQuery = '';
+
+          if (categoryId === 'all') {
+            this.currentCategory = 'all';
+            return;
+          }
+
+          const cat = this.categoryById(categoryId);
+
+          if (!cat) return;
+
+          if (this.isAdmin || !cat.is_locked) {
+            this.currentCategory = cat.id;
+            return;
+          }
+
+          const token = this.categoryAccessTokens[String(cat.id)];
+
+          if (token) {
+            this.loadUnlockedCategory(cat, token);
+          } else {
+            this.openCategoryUnlock(cat);
+          }
+        },
+
+        loadUnlockedCategory(cat, token) {
+          this.loading = true;
+          this.loadingText = 'กำลังเปิดหมวดหมู่';
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.loading = false;
+
+              if (result && result.status === 'success') {
+                this.mergeApps(result.data.apps || []);
+                this.currentCategory = cat.id;
+              } else {
+                delete this.categoryAccessTokens[String(cat.id)];
+                this.saveAccessTokens();
+                this.removeAppsFromCategory(cat.id);
+
+                this.openCategoryUnlock(cat);
+
+                if (result?.message) {
+                  this.showToast(result.message, 'warning');
+                }
+              }
+            })
+            .withFailureHandler(error => {
+              this.loading = false;
+
+              delete this.categoryAccessTokens[String(cat.id)];
+              this.saveAccessTokens();
+              this.removeAppsFromCategory(cat.id);
+
+              this.openCategoryUnlock(cat);
+
+              this.showToast(
+                error?.message || 'สิทธิ์เข้าถึงหมดอายุ',
+                'warning'
+              );
+            })
+            .getCategoryApps(cat.id, token);
+        },
+
+        requestCurrentCategoryUnlock() {
+          const cat = this.categoryById(this.currentCategory);
+
+          if (cat) {
+            this.openCategoryUnlock(cat);
+          }
+        },
+
+        openCategoryUnlock(cat) {
+          this.pendingCategory = cat;
+          this.categoryPassword = '';
+          this.showAccessPassword = false;
+
+          this.modal('categoryUnlockModal').show();
+
+          setTimeout(() => {
+            const input = document.querySelector(
+              '#categoryUnlockModal input'
+            );
+
+            if (input) input.focus();
+          }, 300);
+        },
+
+        submitCategoryUnlock() {
+          if (
+            !this.pendingCategory ||
+            !this.categoryPassword ||
+            this.actionBusy
+          ) {
+            return;
+          }
+
+          const cat = this.pendingCategory;
+
+          this.actionBusy = true;
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.actionBusy = false;
+
+              if (result && result.status === 'success') {
+                if (result.accessToken) {
+                  this.categoryAccessTokens[String(cat.id)] =
+                    result.accessToken;
+
+                  this.saveAccessTokens();
+                }
+
+                this.mergeApps(result.apps || []);
+                this.currentCategory = cat.id;
+
+                this.modal('categoryUnlockModal').hide();
+
+                this.categoryPassword = '';
+                this.pendingCategory = null;
+
+                this.showToast(
+                  'ปลดล็อกหมวดหมู่สำเร็จ',
+                  'success'
+                );
+
+              } else {
+                this.showToast(
+                  result?.message || 'รหัสผ่านไม่ถูกต้อง',
+                  'danger'
+                );
+              }
+            })
+            .withFailureHandler(error => {
+              this.actionBusy = false;
+
+              this.showToast(
+                error?.message || 'ไม่สามารถปลดล็อกหมวดหมู่ได้',
+                'danger'
+              );
+            })
+            .unlockCategory(
+              cat.id,
+              this.categoryPassword
+            );
+        },
+
+
+        /* ---------------- App Access ---------------- */
+
+        handleAppClick(app) {
+          if (this.isAdmin) return;
+
+          const parentCategory = this.categoryById(app.category_id);
+          const categoryToken =
+            this.categoryAccessTokens[String(app.category_id)] || null;
+
+          if (parentCategory?.is_locked && !categoryToken) {
+            this.openCategoryUnlock(parentCategory);
+            return;
+          }
+
+          if (app.is_locked) {
+            const appToken =
+              this.appAccessTokens[String(app.id)] || null;
+
+            if (appToken) {
+              this.openAppWithToken(app, categoryToken, appToken);
+            } else {
+              this.openAppUnlock(app);
+            }
+
+            return;
+          }
+
+          if (parentCategory?.is_locked) {
+            this.openAppWithToken(app, categoryToken, null);
+            return;
+          }
+
+          if (app.url) {
+            this.openUrl(app.url);
+          } else {
+            this.openAppWithToken(app, null, null);
+          }
+        },
+
+        openAppUnlock(app) {
+          this.pendingApp = app;
+          this.appPassword = '';
+          this.showAccessPassword = false;
+
+          this.modal('appUnlockModal').show();
+
+          setTimeout(() => {
+            const input = document.querySelector(
+              '#appUnlockModal input'
+            );
+
+            if (input) input.focus();
+          }, 300);
+        },
+
+        submitAppUnlock() {
+          if (
+            !this.pendingApp ||
+            !this.appPassword ||
+            this.actionBusy
+          ) {
+            return;
+          }
+
+          const app = this.pendingApp;
+          const categoryToken =
+            this.categoryAccessTokens[String(app.category_id)] || null;
+
+          this.actionBusy = true;
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.actionBusy = false;
+
+              if (result && result.status === 'success') {
+                if (result.accessToken) {
+                  this.appAccessTokens[String(app.id)] =
+                    result.accessToken;
+
+                  this.saveAccessTokens();
+                }
+
+                this.modal('appUnlockModal').hide();
+
+                this.pendingApp = null;
+                this.appPassword = '';
+
+                if (result.url) {
+                  this.openUrl(result.url);
+                }
+
+              } else {
+                this.handleAppAccessError(app, result);
+              }
+            })
+            .withFailureHandler(error => {
+              this.actionBusy = false;
+
+              this.handleAppAccessError(
+                app,
+                {
+                  message:
+                    error?.message ||
+                    'ไม่สามารถเข้าใช้งานระบบได้'
+                }
+              );
+            })
+            .unlockApp(
+              app.id,
+              this.appPassword,
+              categoryToken
+            );
+        },
+
+        openAppWithToken(app, categoryToken, appToken) {
+          this.loading = true;
+          this.loadingText = 'กำลังเปิดระบบ';
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.loading = false;
+
+              if (result && result.status === 'success') {
+                this.openUrl(result.url);
+              } else {
+                this.handleAppAccessError(app, result);
+              }
+            })
+            .withFailureHandler(error => {
+              this.loading = false;
+
+              this.handleAppAccessError(
+                app,
+                {
+                  message:
+                    error?.message ||
+                    'ไม่สามารถเข้าใช้งานระบบได้'
+                }
+              );
+            })
+            .getAppUrl(
+              app.id,
+              categoryToken,
+              appToken
+            );
+        },
+
+        handleAppAccessError(app, result) {
+          const message =
+            result?.message || 'ไม่สามารถเข้าใช้งานระบบได้';
+
+          const parentCategory =
+            this.categoryById(app.category_id);
+
+          if (
+            message.includes('หมวดหมู่') &&
+            parentCategory?.is_locked
+          ) {
+            delete this.categoryAccessTokens[String(app.category_id)];
+            this.saveAccessTokens();
+            this.removeAppsFromCategory(app.category_id);
+
+            this.modal('appUnlockModal').hide();
+            this.openCategoryUnlock(parentCategory);
+
+          } else if (app.is_locked) {
+            delete this.appAccessTokens[String(app.id)];
+            this.saveAccessTokens();
+
+            this.modal('appUnlockModal').hide();
+            this.openAppUnlock(app);
+          }
+
+          this.showToast(message, 'warning');
+        },
+
+        openUrl(url) {
+          const safeUrl = String(url || '').trim();
+
+          if (!/^https?:\/\//i.test(safeUrl)) {
+            this.showToast('URL ของระบบไม่ถูกต้อง', 'warning');
+            return;
+          }
+
+          window.open(
+            safeUrl,
+            '_blank',
+            'noopener,noreferrer'
+          );
+        },
+
+
+        /* ---------------- Admin Login ---------------- */
+
+        submitLogin() {
+          if (!this.loginPassword || this.actionBusy) return;
+
+          this.actionBusy = true;
+
+          google.script.run
+            .withSuccessHandler(res => {
+              this.actionBusy = false;
+
+              if (res && res.success) {
+                this.isAdmin = true;
+                this.adminToken = res.token;
+
+                sessionStorage.setItem(
+                  'kps_admin_token',
+                  res.token
+                );
+
+                this.modal('loginModal').hide();
+
+                this.loginPassword = '';
+                this.showAdminPassword = false;
+
+                this.fetchAdminData();
+
+                this.showToast(
+                  'เข้าสู่โหมดผู้ดูแลระบบแล้ว',
+                  'success'
+                );
+
+              } else {
+                this.showToast(
+                  res?.message || 'รหัสผ่านไม่ถูกต้อง',
+                  'danger'
+                );
+              }
+            })
+            .withFailureHandler(error => {
+              this.actionBusy = false;
+
+              this.showToast(
+                error?.message || 'เข้าสู่ระบบไม่สำเร็จ',
+                'danger'
+              );
+            })
+            .verifyAdminPassword(this.loginPassword);
+        },
+
+        logoutAdmin() {
+          const oldToken = this.adminToken;
+
+          this.clearAdminSession();
+          this.clearAccessTokens();
+
+          if (oldToken) {
+            google.script.run
+              .withFailureHandler(() => {})
+              .revokeAdminToken(oldToken);
+          }
+
+          this.fetchPublicData();
+
+          this.showToast(
+            'ออกจากโหมดผู้ดูแลระบบแล้ว',
+            'success'
+          );
+        },
+
+        clearAdminSession() {
+          this.isAdmin = false;
+          this.adminToken = null;
+          sessionStorage.removeItem('kps_admin_token');
+        },
+
+
+        /* ---------------- Admin Categories ---------------- */
+
+        openCategoryManager() {
+          if (!this.isAdmin) return;
+
+          this.modal('categoryManagerModal').show();
+        },
+
+        openCategoryEditModal(cat = null) {
+          if (!this.isAdmin) return;
+
+          if (cat) {
+            this.categoryForm = {
+              id: cat.id,
+              name: cat.name || '',
+              order_idx:
+                cat.order_idx !== undefined
+                  ? cat.order_idx
+                  : 99,
+              is_locked: !!cat.is_locked,
+              password: '',
+              password_set: !!cat.password_set
+            };
+
+          } else {
+            this.categoryForm = {
+              id: '',
+              name: '',
+              order_idx: 99,
+              is_locked: false,
+              password: '',
+              password_set: false
+            };
+          }
+
+          this.modal('categoryManagerModal').hide();
+
+          setTimeout(() => {
+            this.modal('categoryEditModal').show();
+          }, 180);
+        },
+
+        saveCategoryData() {
+          if (!this.isAdmin || this.actionBusy) return;
+
+          if (!String(this.categoryForm.name || '').trim()) {
+            this.showToast('กรุณาระบุชื่อหมวดหมู่', 'warning');
+            return;
+          }
+
+          if (
+            this.categoryForm.is_locked &&
+            !this.categoryForm.password_set &&
+            !this.categoryForm.password
+          ) {
+            this.showToast(
+              'กรุณาตั้งรหัสผ่านสำหรับหมวดหมู่นี้',
+              'warning'
+            );
+            return;
+          }
+
+          this.actionBusy = true;
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.actionBusy = false;
+
+              if (result && result.status === 'success') {
+                this.modal('categoryEditModal').hide();
+
+                this.showToast(result.message, 'success');
+                this.fetchAdminData();
+
+              } else {
+                this.handleAdminError(result);
+              }
+            })
+            .withFailureHandler(error => {
+              this.actionBusy = false;
+              this.handleAdminFailure(error);
+            })
+            .saveCategory(
+              this.categoryForm,
+              this.adminToken
+            );
+        },
+
+        deleteCategoryItem(cat) {
+          if (!this.isAdmin || this.actionBusy) return;
+
+          const count = this.apps.filter(
+            app => String(app.category_id) === String(cat.id)
+          ).length;
+
+          const ok = confirm(
+            `ยืนยันลบหมวดหมู่ "${cat.name}" ?\n\n` +
+            `มีระบบงาน ${count} รายการ\n` +
+            `หากฐานข้อมูลใช้ ON DELETE CASCADE ระบบงานภายในจะถูกลบด้วย`
+          );
+
+          if (!ok) return;
+
+          this.actionBusy = true;
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.actionBusy = false;
+
+              if (result && result.status === 'success') {
+                this.showToast(result.message, 'success');
+                this.fetchAdminData();
+
+              } else {
+                this.handleAdminError(result);
+              }
+            })
+            .withFailureHandler(error => {
+              this.actionBusy = false;
+              this.handleAdminFailure(error);
+            })
+            .deleteCategory(
+              cat.id,
+              this.adminToken
+            );
+        },
+
+
+        /* ---------------- Admin Apps ---------------- */
+
+        openAppModal(app = null) {
+          if (!this.isAdmin) return;
+
+          if (app) {
+            this.appForm = {
+              id: app.id || '',
+              category_id: app.category_id || '',
+              app_name: app.app_name || '',
+              url: app.url || '',
+              icon: app.icon || 'bi-grid',
+              description: app.description || '',
+              is_locked: !!app.is_locked,
+              password: '',
+              password_set: !!app.password_set
+            };
+
+          } else {
+            this.appForm = {
+              id: '',
+              category_id:
+                this.currentCategory !== 'all'
+                  ? this.currentCategory
+                  : (this.categories[0]?.id || ''),
+              app_name: '',
+              url: '',
+              icon: 'bi-grid',
+              description: '',
+              is_locked: false,
+              password: '',
+              password_set: false
+            };
+          }
+
+          this.modal('appModal').show();
+        },
+
+        saveAppData() {
+          if (!this.isAdmin || this.actionBusy) return;
+
+          if (!this.appForm.category_id) {
+            this.showToast('กรุณาเลือกหมวดหมู่', 'warning');
+            return;
+          }
+
+          if (!String(this.appForm.app_name || '').trim()) {
+            this.showToast('กรุณาระบุชื่อระบบงาน', 'warning');
+            return;
+          }
+
+          if (
+            !/^https?:\/\//i.test(
+              String(this.appForm.url || '')
+            )
+          ) {
+            this.showToast(
+              'URL ต้องขึ้นต้นด้วย http:// หรือ https://',
+              'warning'
+            );
+            return;
+          }
+
+          if (
+            this.appForm.is_locked &&
+            !this.appForm.password_set &&
+            !this.appForm.password
+          ) {
+            this.showToast(
+              'กรุณาตั้งรหัสผ่านสำหรับระบบนี้',
+              'warning'
+            );
+            return;
+          }
+
+          this.actionBusy = true;
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.actionBusy = false;
+
+              if (result && result.status === 'success') {
+                this.modal('appModal').hide();
+
+                this.showToast(result.message, 'success');
+                this.fetchAdminData();
+
+              } else {
+                this.handleAdminError(result);
+              }
+            })
+            .withFailureHandler(error => {
+              this.actionBusy = false;
+              this.handleAdminFailure(error);
+            })
+            .saveApp(
+              this.appForm,
+              this.adminToken
+            );
+        },
+
+        deleteAppItem(app) {
+          if (!this.isAdmin || this.actionBusy) return;
+
+          const ok = confirm(
+            `ยืนยันลบระบบ "${app.app_name}" ?\n\nข้อมูลจะถูกลบออกจากฐานข้อมูล`
+          );
+
+          if (!ok) return;
+
+          this.actionBusy = true;
+
+          google.script.run
+            .withSuccessHandler(result => {
+              this.actionBusy = false;
+
+              if (result && result.status === 'success') {
+                this.showToast(result.message, 'success');
+                this.fetchAdminData();
+
+              } else {
+                this.handleAdminError(result);
+              }
+            })
+            .withFailureHandler(error => {
+              this.actionBusy = false;
+              this.handleAdminFailure(error);
+            })
+            .deleteApp(
+              app.id,
+              this.adminToken
+            );
+        },
+
+
+        /* ---------------- Errors ---------------- */
+
+        handleAdminError(result) {
+          const message =
+            result?.message || 'ดำเนินการไม่สำเร็จ';
+
+          if (
+            message.includes('Unauthorized') ||
+            message.includes('ไม่มีสิทธิ์')
+          ) {
+            this.clearAdminSession();
+            this.fetchPublicData();
+          }
+
+          this.showToast(message, 'danger');
+        },
+
+        handleAdminFailure(error) {
+          const message =
+            error?.message || 'เกิดข้อผิดพลาดจากระบบ';
+
+          if (
+            message.includes('Unauthorized') ||
+            message.includes('ไม่มีสิทธิ์')
+          ) {
+            this.clearAdminSession();
+            this.fetchPublicData();
+          }
+
+          this.showToast(message, 'danger');
+        },
+
+
+        /* ---------------- Toast ---------------- */
+
+        showToast(message, type = 'success') {
+          const toastEl = document.getElementById('sysToast');
+          const toastMsg = document.getElementById('toastMsg');
+
+          toastEl.className =
+            'toast align-items-center border-0 shadow-lg';
+
+          if (type === 'success') {
+            toastEl.classList.add('text-bg-success');
+
+          } else if (type === 'danger') {
+            toastEl.classList.add('text-bg-danger');
+
+          } else if (type === 'warning') {
+            toastEl.classList.add('text-bg-warning');
+
+          } else {
+            toastEl.classList.add('text-bg-secondary');
+          }
+
+          toastMsg.innerText = message;
+
+          bootstrap.Toast
+            .getOrCreateInstance(
+              toastEl,
+              { delay: 3300 }
+            )
+            .show();
+        }
+      };
+    }
+  </script>
+
+</body>
+</html>
