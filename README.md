@@ -5,7 +5,7 @@
 
 ปลายทาง Google Apps Script Web App:
 
-https://script.google.com/macros/s/AKfycbypnTjvAOmNmk8UC5cE6Nyx2t_U4mBw-mMCjoDS_aM_flOTV22aB3Z82Ko2Jj6h1P00pA/exec
+
 
 ## วิธีติดตั้ง
 
